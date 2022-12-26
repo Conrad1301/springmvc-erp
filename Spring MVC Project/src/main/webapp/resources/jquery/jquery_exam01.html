@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="my_style2.css">
+</head>
+<body>
+
+	<div id="header">
+		<h2>아침고요수목원~</h2>
+	</div>
+	<div id="main">
+		<div id="g1" class="gardenimg">
+			
+			<img src="m_garden01.jpg" />
+		</div>
+		<div id="g2" class="gardenimg">
+			<img src="m_garden02.jpg" />
+		</div>
+		<div id="g3" class="gardenimg">
+			<img src="m_garden03.jpg" />
+		</div>
+		<div id="g4" class="gardenimg">
+			<img src="m_garden04.jpg" />
+		</div>
+	</div>
+
+	<script>
+
+	$(document).ready(function() {
+		$(".gardenimg").on("mouseover", function () {
+			$(".gardenimg p").remove();
+			count = Math.floor(Math.random()*10)+500;
+			data = $("<p>방문자 수:"+count+"</P>");
+			$(this).append(data);
+		});
+	$("#g2").on("click", function () {
+			var data = Math.random();
+			$("#g2").append(data);
+		});
+	$("#g3").on("click", function () {
+			var data = Math.random();
+			$("#g3").append(data);
+		});
+	$("#g4").on("click", function () {
+			var data = Math.random();
+			$("#g4").append(data);			
+		});
+	});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
