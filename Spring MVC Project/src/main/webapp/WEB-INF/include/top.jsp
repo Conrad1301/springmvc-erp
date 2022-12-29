@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +66,7 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="/erp/emp/mypage/myjob">업무관리</a></li>
-					<li><a href="#">자원관리</a></li>
+					<li><a href="/erp/resmgr/main">자원관리</a></li>
 					<li><a href="/erp/board/list.do?category=all">커뮤니티</a></li>
 					<li><a href="#">일정관리</a></li>
 					<li><a href="#">휴가관리</a></li>

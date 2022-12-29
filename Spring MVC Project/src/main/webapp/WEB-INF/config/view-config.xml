@@ -10,4 +10,5 @@
 	<view-controller path="/ajax/view" view-name="etcview/ajax"/>
 	<view-controller path="/ajax/exam" view-name="etcview/ajaxexam"/>
 	<view-controller path="/member/insert" view-name="member/insertpage"/>
+	<view-controller path="/clovaapi/ocrview" view-name="commonjob/receiptjob"/>
 </beans:beans>
