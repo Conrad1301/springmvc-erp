@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -87,11 +91,24 @@
 	
 	</interceptors>
 	
-	
-	
-	
-	
-	
+	 
+	<!--=========스프링에서 트랜잭션을 관리하는 핵심클래스를 빈으로 등록======================  -->
+	<!--1.transactionmanager객체등록  -->
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="ds"></beans:property>
+	</beans:bean>
+	<!--2. advice등록  -->
+	<!--exception이 발생하면 rollback처리를 하겠다는 의미  -->
+	<tx:advice id="txadvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<!--3. aop처리  -->
+	<aop:config>
+	<aop:pointcut expression="execution(* com.multi.erp.*.*Service*.insert(..))" id="txpointcut"/>
+	<aop:advisor advice-ref="txadvice" pointcut-ref="txpointcut"/>
+	</aop:config>
 	<!--===========================================빈을 생성하기 위해 패키지등록===================================  -->
 	<context:component-scan base-package="com.multi.springmvc" />
 	<context:component-scan base-package="com.multi.erp" />
@@ -99,6 +116,6 @@
 	<context:component-scan base-package="emp"/>
 	<context:component-scan base-package="com"/>
 	
-	
-	
+	 <!--aop작업을 수행하는 proxy가 자동으로 감지해서 aop등록된 것을 확인하고 실행될 수 있도록 처러  -->
+	<aop:aspectj-autoproxy/>
 </beans:beans>

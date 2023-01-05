@@ -2,21 +2,31 @@ package test;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.UUID;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Test {
 
 	public static void main(String[] args) {
 		String apiURL = "https://scss119stu.apigw.ntruss.com/custom/v1/19891/92f5644cc16e65af79c7af2bc43f594834af74e980caf5c41fd8bdfaabe8cdd9/infer";
 		String secretKey = "Tk11ZExBQldiR3ZjR3Fmc214UmZJcEJ2ek9JRXdveG8=";
-		//http통신을 위해 준비
+		//디스크에서 서버로 전송할 파일을 준비
+		String imagename = "20221228030247.jpg";
+		String imagepath = Paths.get(System.getProperty("user.dir"), "src","main","webapp","WEB-INF","static","images").toString();
+		String imageFile = imagepath+"\\"+imagename;
+		System.out.println(imageFile);
+		
 		try {
+			//http통신을 위해 준비
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			//http통신을 담당하는 객체에 속성을 설정
@@ -35,7 +45,21 @@ public class Test {
 			json.put("timestamp", System.currentTimeMillis());
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
-			image.put("url", "https://kr.object.ncloudstorage.com/ocr-ci-test/sample/1.jpg"); // image should be public, otherwise, should use data
+			
+			//이미지파일을 base64로 인코딩
+			File f = new File(imageFile);
+			FileInputStream fis = new FileInputStream(f);
+			//파일을 바이트로(바이너리데이터로) 변환
+			byte[] byteArray = new byte[(int)f.length()];
+			//바이너리로 변환된 파일을 읽기
+			fis.read(byteArray);
+			//바이너리데이터를 base64로 인코딩
+			String imageString = Base64.getEncoder().encodeToString(byteArray);
+			System.out.println(imageString);
+			//base64형식으로 변환된 이미지를 json에 전송
+			image.put("data", imageString); // image should be public, otherwise, should use data
+			
+			
 			// FileInputStream inputStream = new FileInputStream("YOUR_IMAGE_FILE");
 			// byte[] buffer = new byte[inputStream.available()];
 			// inputStream.read(buffer);
@@ -43,7 +67,7 @@ public class Test {
 			// image.put("data", buffer);
 			image.put("name", "demo");
 			JSONArray images = new JSONArray();
-			images.put(image);
+			images.add(image);
 			json.put("images", images);
 			String postParams = json.toString();
 			

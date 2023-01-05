@@ -56,6 +56,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	@Override
 	public List<BoardDTO> findByCategory(String category) {
+		
+		//그냥 메소드 수행시간 측정하기 
 		 List<BoardDTO> list = null;
 		 if(category!=null) {
 			 if(category.equals("all")) {

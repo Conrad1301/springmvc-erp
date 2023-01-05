@@ -23,16 +23,16 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public int insert(BoardDTO board) {
-		System.out.println("====================dao=======================");
+		//System.out.println("====================dao=======================");
 		return sqlSession.insert("com.multi.erp.board.write", board);
 	}
 
 	@Override
 	public List<BoardDTO> boardList() {
-		System.out.println("====================dao=======================");
+		//System.out.println("====================dao=======================");
 		List<BoardDTO> list = sqlSession.selectList("com.multi.erp.board.selectall");
 		
-		System.out.println("====================dao끝=======================");
+		//System.out.println("====================dao끝=======================");
 		return  list;
 	}
 
@@ -56,7 +56,7 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 	@Override
 	public List<BoardDTO> search(String tag, String data) {
-		System.out.println(tag+"========================"+data);
+		//System.out.println(tag+"========================"+data);
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("tag", tag);
 		map.put("data", data);
