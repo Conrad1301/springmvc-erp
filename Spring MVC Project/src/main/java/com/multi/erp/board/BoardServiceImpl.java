@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //BoardDAO의 메소드를 호출
 //=> 컨틀로러에게 받은 데이터를 가공해서 DAO로 넘기거나 DAO에서 받은 데이터를 가공해서 컨트롤러로 넘기는 작업
@@ -23,6 +24,7 @@ public class BoardServiceImpl implements BoardService{
 	//게시글 등록
 	//=> 게시글 기본정보 저장, 첨부된 파일에 대한 정보 저장
 	//dao클래스에 정의된 두 개의 메소드를 호출
+	@Transactional
 	@Override
 	public int insert(BoardDTO board, List<BoardFileDTO> boardfiledtolist) {
 		dao.insert(board);
